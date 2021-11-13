@@ -5,7 +5,7 @@ class article extends CI_Controller {
     function __construct(){
         parent::__construct();
 
-        $this->load->model("ModelArticle", "articles");
+        $this->load->model("ModelArticle", "article");
     
     }
     
@@ -33,12 +33,18 @@ class article extends CI_Controller {
         );
 
         try {
-            $this->articles->create($article);
+            $this->article->create($article);
 
             return $this->load->view('home_page');
         } catch (Exception $e) {
             show_error($e->getMessage());
             return;
         }
+    }
+
+    public function read($articleID) {
+        $data["article"] = $this->article->getByID($articleID, true);
+       
+        return $this->load->view('read_article', $data);
     }
 }

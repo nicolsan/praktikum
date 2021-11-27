@@ -116,8 +116,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <p><?= $article[0]["content"]?></p>
         </div>
         <div>
-            <a href="<?= site_url('article/edit/'.$article[0]['id'])?>">Edit</a>
-            <a href="<?= site_url('article/delete/'.$article[0]['id'])?>">Delete</a>
+            <?php
+            if ($this->session->userdata('logged_in') != NULL) {
+            ?>
+                <a href="<?= site_url('article/edit/'.$article[0]['id'])?>">Edit</a>
+                <a href="<?= site_url('article/delete/'.$article[0]['id'])?>">Delete</a>
+            <?php
+            }
+            ?>
         </div>
     </main>
 

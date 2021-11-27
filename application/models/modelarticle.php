@@ -37,4 +37,16 @@ class ModelArticle extends CI_Model {
         return $query->result();
     }
 
+    public function update($article) {
+        $this->db->trans_start();
+        $this->db->update(ModelArticle::TABLE_NAME, $article, array('id' => $article["id"]));
+        $this->db->trans_complete();
+    }
+
+    public function delete($articleID) {
+        $this->db->trans_start();
+        $this->db->delete(ModelArticle::TABLE_NAME, array('id' => $articleID));
+        $this->db->trans_complete();
+    }
+
 }

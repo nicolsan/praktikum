@@ -47,4 +47,40 @@ class article extends CI_Controller {
        
         return $this->load->view('read_article', $data);
     }
+
+    public function edit($articleID) {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('title','Article Title', 'required');
+        $this->form_validation->set_rules('summary','Summary', 'required');
+        $this->form_validation->set_rules('content','Content', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data["article"] = $this->article->getByID($articleID, true); 
+            return $this->load->view('edit_article', $data);
+        }
+
+        $article = array (
+            'id' => $this->input->post('id'),
+            'title' => $this->input->post('title'),
+            'summary' => $this->input->post('summary'),
+            'content' => $this->input->post('content'),
+        );
+
+        try {
+            $this->article->update($article);
+
+            redirect("/");
+        } catch (Exception $e) {
+            show_error($e->getMessage());
+            return;
+        }
+    }
+
+    public function delete($articleID) {
+        $this->article->delete($articleID);
+
+        redirect();
+    }
 }

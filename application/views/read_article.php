@@ -107,36 +107,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <li><a href="<?= base_url(); ?>">Features</a></li>
             <li><a href="<?= base_url(); ?>">Sports</a></li>
             <li><a href="<?= base_url(); ?>">Tech</a></li>
-            <?php
-            if ($this->session->userdata('logged_in') == NULL) {
-            ?>
-                <li><a href=<?= site_url('article/login') ?>>Login</a></li>
-            <?php
-            } else {
-            ?>
-                <li><a href=<?= site_url('article/logout') ?>>Logout</a></li>
-            <?php
-            }
-            ?>
         </ul>
     </nav>
 
     <main id="container">
         <div class="content">
-            <h1>Welcome to Newsland!</h1>
-            <p>Great Stories is happening here.</p>
+            <h1><?= $article[0]["title"]?></h1>
+            <p><?= $article[0]["content"]?></p>
+        </div>
+        <div>
             <?php
-            if (!isset($articles)) {
-                echo "<h2>No Articles</h2>";
-            } else {
-                foreach ($articles as $article) {
+            if ($this->session->userdata('logged_in') != NULL) {
             ?>
-                    <article>
-                        <h2><?= $article["title"] ?></h2>
-                        <p><?= $article["summary"] ?><a href=<?= site_url('article/read/'.$article['id']) ?>>Read more. </a></p>
-                    </article>
+                <a href="<?= site_url('article/edit/'.$article[0]['id'])?>">Edit</a>
+                <a href="<?= site_url('article/delete/'.$article[0]['id'])?>">Delete</a>
             <?php
-                }
             }
             ?>
         </div>

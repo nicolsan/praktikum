@@ -27,7 +27,11 @@ class article extends CI_Controller {
         $this->form_validation->set_rules('content','Content', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            return $this->load->view('create_article');
+            $this->load->view('header');
+            $this->load->view('create_article');
+            $this->load->view('footer');
+
+            return;
         }
 
         $article = array (
@@ -39,7 +43,7 @@ class article extends CI_Controller {
         try {
             $this->article->create($article);
 
-            return $this->load->view('home_page');
+            redirect('/');
         } catch (Exception $e) {
             show_error($e->getMessage());
             return;
@@ -49,7 +53,9 @@ class article extends CI_Controller {
     public function read($articleID) {
         $data["article"] = $this->article->getByID($articleID, true);
        
-        return $this->load->view('read_article', $data);
+        $this->load->view('header');
+        $this->load->view('read_article', $data);
+        $this->load->view('footer');
     }
 
     public function edit($articleID) {
@@ -66,7 +72,12 @@ class article extends CI_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $data["article"] = $this->article->getByID($articleID, true); 
-            return $this->load->view('edit_article', $data);
+            
+            $this->load->view('header');
+            $this->load->view('edit_article', $data);
+            $this->load->view('footer');
+
+            return;
         }
 
         $article = array (
@@ -105,7 +116,11 @@ class article extends CI_Controller {
     
 
         if ($this->form_validation->run() == FALSE) {
-            return $this->load->view('login_page');
+            $this->load->view("header");
+            $this->load->view('login_page');
+            $this->load->view("footer");
+        
+            return;
         }
 
         

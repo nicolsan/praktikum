@@ -13,6 +13,8 @@ class home extends CI_Controller {
     public function index(){
         $data['articles'] = $this->article->getAll(true);
            
-		$this->load->view('home_page', $data);
-	}
+		$this->load->view('header');
+        $this->load->view('home_page', $data);
+        $this->load->view('footer');
+    }
 }
